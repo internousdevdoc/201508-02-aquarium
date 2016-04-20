@@ -1,0 +1,57 @@
+
+mongodbはコレクション（テーブル）単位ではなく、ドキュメント（レコード）単位でデータを保持しているため
+同一コレクションでも違うフィールド（カラム）が存在しうる。
+
+# mongodbサーバー起動
+
+# コマンドプロンプト上で下記コマンドを実行
+#（環境バスがmongodbインストール先のbinに通っていることが前提）
+
+mongod —-dbpath C:¥data/db
+
+# mongod		: mongodbサーバーを操作するコマンド
+# —dbpath		: mongodbのDB参照先の指定
+# C:¥data/db	: DB参照先のフォルダ（例ではCドライブ直下に作成）
+
+# mongod起動中のコンソールとは別のコンソールを立ち上げる
+# 
+
+# mongo起動コマンド
+mongo
+
+# database作成
+# mongodbはDBが存在しない場合は自動で作成してくれるため、DBを切り替えるコマンドを打つことで作成が行われる
+use tbox
+
+# insert()
+insert into table (‘hoge’)values(‘1’)
+=>
+db.table.insert({hoge:’1’});
+
+
+# find()【MySQLのselectに該当する】
+select * from table where hoge = 1
+=>
+db.table.find({hoge:1})
+
+
+# update()【】
+# 第１引数はwhere句
+# 第２引数は更新するドキュメント内容
+
+db.table.update({hoge2:’aaa’}, {hoge:’1’, hoge2:'aaa'})
+db.table.update({hoge:'bbb'}, {hoge:1, hoge2:'aaa'})
+
+# 第２引数でドキュメント全てではなく対象のフィールドを更新したい場合
+update table set hogged = ‘aaa’ where home = 1;
+=>
+db.table.update({hoge:1}, {$set:{hoge2:'aaa'}})
+
+
+# remove() : (delete句)
+delete from table where home = 1
+=>
+db.table.remove({hoge:1})
+
+
+

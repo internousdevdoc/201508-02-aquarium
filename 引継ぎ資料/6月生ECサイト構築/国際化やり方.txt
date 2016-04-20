@@ -1,0 +1,50 @@
+☆国際化
+
+jsp内の文章は全てプロパティファイルに移動する形になります。
+
+http://www.atmarkit.co.jp/ait/articles/0503/26/news009.html
+
+このプラグイン入れてください。
+これを入れることにより、Eclipse上で
+『プロパティファイル→右クリック→次で開く』で専用エディタが使えるので編集しやすくなります。
+
+■プロパティファイルの書き方
+ここを参考に。
+プロパティファイル内での改行はできないようです。
+また、英語化はたいぞーやたかがやってくれるので、『自身の画面名_ja』というファイルの中身を書いていってもらえるようお願いします。
+
+http://www.h7.dion.ne.jp/~a.d.1976/naguri20050509.html
+
+
+■jsp内でプロパティファイルを指定
+
+★ドキュメント宣言の前に追加
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="language"
+	value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+	scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="jp.co.internous.tBOX.property.画面名" />
+
+★ドキュメント宣言の後に追加
+<html lang="${language}">
+
+★表示
+<fmt:message key="プロパティファイルのキー名" />
+
+
+★例
+
+プロパティファイル例：
+
+register = 登録
+email = メールアドレス
+
+表示例：
+
+<fmt:message key="register" />
+<fmt:message key="email" />
+
+よろしくお願いします。
